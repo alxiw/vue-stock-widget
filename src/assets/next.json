@@ -1,0 +1,23 @@
+{
+  "title": "market",
+  "tabs": [
+    {
+      "title": "sectoral",
+      "codes": [
+        "MICEXPWR",
+        "MICEXTLC",
+        "MICEXFNL",
+        "MICEXCGS",
+        "MICEXCHM",
+        "MICEXTRN"
+      ]
+    },
+    {
+      "title": "misc",
+      "codes": [
+        "MICEX10INDEX",
+        "MICEXINNOV"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "title": "indicies",
+  "tabs": [
+    {
+      "title": "shares",
+      "codes": [
+        "IMOEX",
+        "RTSI",
+        "MICEXBMI",
+        "RTSSTD",
+        "RVI"
+      ]
+    },
+    {
+      "title": "bonds",
+      "codes": [
+        "RGBITR",
+        "MICEXCBITR",
+        "MICEXMBITR",
+        "MICEXCBITR3Y",
+        "MICEXCBITR5Y"
+      ]
+    },
+    {
+      "title": "assets",
+      "codes": [
+        "RUPCI",
+        "RUPMI",
+        "RUPAI"
+      ]
+    },
+    {
+      "title": "repo",
+      "codes": [
+        "MOEXREPO",
+        "MOEXREPOEQ",
+        "RPGCC",
+        "MOEXREPO1W",
+        "RPGCC1W"
+      ]
+    },
+    {
+      "title": "other",
+      "codes": [
+        "MICEXTLC",
+        "MICEXPWR",
+        "MICEXFNL",
+        "MICEXTRN",
+        "MICEXCGS",
+        "MICEXCHM"
+      ]
+    }
+  ]
+}
