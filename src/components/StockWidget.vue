@@ -17,9 +17,9 @@
             :key="index"
             v-bind:class="['widget-button-tab', { current: currentTabIndex === index }]"
             v-on:click="click(index)">
-          {{ tab.title }}
+          <span>{{ tab.title }}</span>
         </button>
-        <stock-tab :tabInfo="data.tabs[currentTabIndex]" :securitiesJson="securitiesJson"/>
+        <stock-tab :tab-info="data.tabs[currentTabIndex]" :securities-json="securitiesJson"/>
       </div>
     </section>
   </div>
@@ -36,7 +36,7 @@ export default {
     StockTab
   },
   props: {
-    data: []
+    data: Object
   },
   data () {
     return {

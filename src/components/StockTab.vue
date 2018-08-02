@@ -63,8 +63,8 @@ import moment from 'moment'
 export default {
   name: 'StockWidget',
   props: {
-    tabInfo: [],
-    securitiesJson: []
+    tabInfo: Object,
+    securitiesJson: Object
   },
   data () {
     return {
