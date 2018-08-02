@@ -221,16 +221,16 @@ export default {
     text-decoration: none;
     color: #336699;
   }
-  .tab-table td.trend-up {
+  .tab-table td.trend-up span {
     vertical-align: top;
     color: #090;
   }
-  .tab-table td.trend-down {
+  .tab-table td.trend-down span  {
     vertical-align: top;
     color: #c00;
     text-decoration: none;
   }
-  .tab-table td.trend-none {
+  .tab-table td.trend-none span  {
     vertical-align: top;
     color: #666;
   }
