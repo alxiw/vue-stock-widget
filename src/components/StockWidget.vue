@@ -17,7 +17,7 @@
             :key="index"
             v-bind:class="['widget-button-tab', { current: currentTabIndex === index }]"
             v-on:click="click(index)">
-          <span>{{ tab.title }}</span>
+          {{ tab.title }}
         </button>
         <stock-tab :tab-info="data.tabs[currentTabIndex]" :securities-json="securitiesJson"/>
       </div>
