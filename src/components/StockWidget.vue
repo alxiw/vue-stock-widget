@@ -9,7 +9,6 @@
       </div>
       <div v-if="axiosLoading"
            class="widget-loading">
-        loading
       </div>
       <div v-else
            class="widget-body">
@@ -86,14 +85,8 @@ export default {
     text-transform: uppercase;
   }
   .widget-loading {
-    text-align: center;
-    font-size: 16px;
-    font-weight: 500;
-    color: #4c4c4c;
-    vertical-align: middle;
-    white-space: nowrap;
-    text-transform: uppercase;
-    padding-top: 10px;
+    background: #eee url("https://assets.moex.com/widgets/assets/facebook-ajax-loader.gif") no-repeat center center;
+    padding: 25px 0;
   }
   .widget-body {
 
