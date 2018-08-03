@@ -73,14 +73,7 @@ export default {
   },
   methods: {
     getSecuritiesColumnIndex (column) {
-      let data = this.securitiesJson.securities.columns
-      let index = 0
-      for (let i = 0; i < data.length; i++) {
-        if (data[i] === column) {
-          index = i
-        }
-      }
-      return index
+      return this.securitiesJson.securities.columns.indexOf(column)
     },
     getSecurities (code) {
       let data = this.securitiesJson.securities.data
@@ -90,17 +83,10 @@ export default {
           index = i
         }
       }
-      return this.securitiesJson.securities.data[index]
+      return data[index]
     },
     getMarketdataColumnIndex (column) {
-      let data = this.securitiesJson.marketdata.columns
-      let index = 0
-      for (let i = 0; i < data.length; i++) {
-        if (data[i] === column) {
-          index = i
-        }
-      }
-      return index
+      return this.securitiesJson.marketdata.columns.indexOf(column)
     },
     getMarketdata (code) {
       let data = this.securitiesJson.marketdata.data
@@ -110,7 +96,7 @@ export default {
           index = i
         }
       }
-      return this.securitiesJson.marketdata.data[index]
+      return data[index]
     },
     getChart (code) {
       let a = 'https://iss.moex.com/cs/engines/stock/markets/index/boardgroups/9/securities/'
