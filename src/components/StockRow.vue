@@ -1,49 +1,45 @@
 <template>
   <div class="row">
     <table>
-    <thead>
-    </thead>
-    <tbody>
-    <tr class="data"
-        :class="rowColor (index)">
-      <td class="name"
-          title="Stock Index Name"
-          >
-        <a v-bind:href="link" target="_blank" onclick="event.stopPropagation()">
-          <span>{{ securities[securitiesColumns.indexOf('SHORTNAME')] }}</span>
-        </a>
-      </td>
-      <td class="date"
-          title="Date"
-          >
-        <span>{{ marketdata[marketdataColumns.indexOf('TRADEDATE')] | formatDate }}</span>
-      </td>
-      <td class="time"
-          title="Time"
-          >
-        <span>{{ marketdata[marketdataColumns.indexOf('UPDATETIME')] | formatTime }}</span>
-      </td>
-      <td class="number"
-          title="Current Value"
-          >
-        <span>{{ marketdata[marketdataColumns.indexOf('CURRENTVALUE')] | currencyDecimal }}</span>
-      </td>
-      <td class="percent"
-          :class="percentColor(marketdata[marketdataColumns.indexOf('LASTCHANGETOOPENPRC')])"
-          title="Change in Current Value to Previous Trading Day Value, %"
-          >
-        <span>{{ marketdata[marketdataColumns.indexOf('LASTCHANGETOOPENPRC')] | currencyDecimal }}%</span>
-      </td>
-    </tr>
-    <tr class="chart"
-        v-show="isRowCurrent">
-      <td colspan="5">
-        <div class="wrapper">
-          <img v-bind:src="chart">
-        </div>
-      </td>
-    </tr>
-    </tbody>
+      <tr class="data"
+          :class="rowColor (index)">
+        <td class="name"
+            title="Stock Index Name"
+            >
+          <a v-bind:href="link" target="_blank" onclick="event.stopPropagation()">
+            <span>{{ securities[securitiesColumns.indexOf('SHORTNAME')] }}</span>
+          </a>
+        </td>
+        <td class="date"
+            title="Date"
+            >
+          <span>{{ marketdata[marketdataColumns.indexOf('TRADEDATE')] | formatDate }}</span>
+        </td>
+        <td class="time"
+            title="Time"
+            >
+          <span>{{ marketdata[marketdataColumns.indexOf('UPDATETIME')] | formatTime }}</span>
+        </td>
+        <td class="number"
+            title="Current Value"
+            >
+          <span>{{ marketdata[marketdataColumns.indexOf('CURRENTVALUE')] | currencyDecimal }}</span>
+        </td>
+        <td class="percent"
+            :class="percentColor(marketdata[marketdataColumns.indexOf('LASTCHANGETOOPENPRC')])"
+            title="Change in Current Value to Previous Trading Day Value, %"
+            >
+          <span>{{ marketdata[marketdataColumns.indexOf('LASTCHANGETOOPENPRC')] | currencyDecimal }}%</span>
+        </td>
+      </tr>
+      <tr class="chart"
+          v-show="isRowCurrent">
+        <td colspan="5">
+          <div class="wrapper">
+            <img v-bind:src="chart">
+          </div>
+        </td>
+      </tr>
     </table>
   </div>
 </template>
