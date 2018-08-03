@@ -14,12 +14,14 @@
            class="widget-body">
         <button class="widget-button-tab"
             v-for="(tab, index) in data.tabs"
-            :key="index"
+            :key="tab.title"
             v-bind:class="['widget-button-tab', { current: currentTabIndex === index }]"
             v-on:click="click(index)">
           {{ tab.title }}
         </button>
-        <stock-tab :tab-info="data.tabs[currentTabIndex]" :securities-json="securitiesJson"/>
+        <stock-tab :tab-info="data.tabs[currentTabIndex]"
+                   :securities-json="securitiesJson">
+        </stock-tab>
       </div>
     </section>
   </div>
@@ -47,23 +49,26 @@ export default {
       currentTabIndex: 0
     }
   },
-  mounted () {
-    let link = 'http://iss.moex.com/iss/engines/stock/markets/index/securities.json?securities='
-    for (let i = 0; i < this.data.tabs.length; i++) {
-      for (let j = 0; j < this.data.tabs[i].codes.length; j++) {
-        this.securitiesList.push(this.data.tabs[i].codes[j])
-      }
-    }
-    axios
-      .get(link + this.securitiesList.join(','))
-      .then(response => (this.securitiesJson = response.data))
-      .catch(error => {
-        console.log(error)
-        this.axiosErrored = true
-      })
-      .finally(() => (this.axiosLoading = false))
+  created () {
+    this.fetchSecuritiesJson()
   },
   methods: {
+    fetchSecuritiesJson () {
+      let link = 'http://iss.moex.com/iss/engines/stock/markets/index/securities.json?securities='
+      for (let i = 0; i < this.data.tabs.length; i++) {
+        for (let j = 0; j < this.data.tabs[i].codes.length; j++) {
+          this.securitiesList.push(this.data.tabs[i].codes[j])
+        }
+      }
+      axios
+        .get(link + this.securitiesList.join(','))
+        .then(response => (this.securitiesJson = response.data))
+        .catch(error => {
+          console.log(error)
+          this.axiosErrored = true
+        })
+        .finally(() => (this.axiosLoading = false))
+    },
     click (index) {
       this.currentTabIndex = index
     }
@@ -89,7 +94,7 @@ export default {
     padding: 25px 0;
   }
   .widget-body {
-
+    width: 100%
   }
   .widget-button-tab {
     border: 1px solid #ccc;
