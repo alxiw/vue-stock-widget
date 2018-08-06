@@ -30,7 +30,7 @@
 <script>
 import axios from 'axios'
 
-import StockTab from '../components/StockTab'
+import StockTab from './StockTab'
 
 export default {
   name: 'StockWidget',
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     fetchSecuritiesJson () {
-      let link = 'http://iss.moex.com/iss/engines/stock/markets/index/securities.json?securities='
+      const link = 'http://iss.moex.com/iss/engines/stock/markets/index/securities.json?securities='
       for (let i = 0; i < this.data.tabs.length; i++) {
         for (let j = 0; j < this.data.tabs[i].codes.length; j++) {
           this.securitiesList.push(this.data.tabs[i].codes[j])

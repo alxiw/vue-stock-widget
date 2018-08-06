@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import StockRow from '../components/StockRow'
+import StockRow from './StockRow'
 
 export default {
-  name: 'StockWidget',
+  name: 'StockTab',
   components: {
     StockRow
   },
@@ -44,24 +44,10 @@ export default {
   },
   methods: {
     getSecurities (code) {
-      let data = this.securitiesJson.securities.data
-      let index = 0
-      for (let i = 0; i < data.length; i++) {
-        if (data[i][0] === code) {
-          index = i
-        }
-      }
-      return data[index]
+      return this.securitiesJson.securities.data.find(item => item[0] === code)
     },
     getMarketdata (code) {
-      let data = this.securitiesJson.marketdata.data
-      let index = 0
-      for (let i = 0; i < data.length; i++) {
-        if (data[i][0] === code) {
-          index = i
-        }
-      }
-      return data[index]
+      return this.securitiesJson.marketdata.data.find(item => item[0] === code)
     },
     makeActive (index) {
       if (this.currentRowIndex !== index) {

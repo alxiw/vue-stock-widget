@@ -2,34 +2,29 @@
   <div class="row">
     <table>
       <tr class="data"
-          :class="rowColor (index)">
+          :class="rowColor">
         <td class="name"
-            title="Stock Index Name"
-            >
+            title="Stock Index Name">
           <a v-bind:href="link" target="_blank" onclick="event.stopPropagation()">
-            <span>{{ securities[securitiesColumns.indexOf('SHORTNAME')] }}</span>
+            <span>{{ shortName }}</span>
           </a>
         </td>
         <td class="date"
-            title="Date"
-            >
-          <span>{{ marketdata[marketdataColumns.indexOf('TRADEDATE')] | formatDate }}</span>
+            title="Date">
+          <span>{{ tradeDate | formatDate }}</span>
         </td>
         <td class="time"
-            title="Time"
-            >
-          <span>{{ marketdata[marketdataColumns.indexOf('UPDATETIME')] | formatTime }}</span>
+            title="Time">
+          <span>{{ updateTime | formatTime }}</span>
         </td>
         <td class="number"
-            title="Current Value"
-            >
-          <span>{{ marketdata[marketdataColumns.indexOf('CURRENTVALUE')] | currencyDecimal }}</span>
+            title="Current Value">
+          <span>{{ currentValue | currencyDecimal }}</span>
         </td>
         <td class="percent"
-            :class="percentColor(marketdata[marketdataColumns.indexOf('LASTCHANGETOOPENPRC')])"
-            title="Change in Current Value to Previous Trading Day Value, %"
-            >
-          <span>{{ marketdata[marketdataColumns.indexOf('LASTCHANGETOOPENPRC')] | currencyDecimal }}%</span>
+            :class="percentColor"
+            title="Change in Current Value to Previous Trading Day Value, %">
+          <span>{{ lastChangeToOpenPrc | currencyDecimal }}%</span>
         </td>
       </tr>
       <tr class="chart"
@@ -57,42 +52,57 @@ export default {
     marketdata: Array,
     isRowCurrent: Boolean
   },
-  data () {
-    return {
-
+  methods: {
+    getSecurities (value) {
+      return this.securities[this.securitiesColumns.indexOf(value)]
+    },
+    getMarketdata (value) {
+      return this.marketdata[this.marketdataColumns.indexOf(value)]
     }
   },
-  methods: {
-    percentColor (percent) {
-      if (percent > 0) {
+  computed: {
+    shortName () {
+      return this.getSecurities('SHORTNAME')
+    },
+    tradeDate () {
+      return this.getMarketdata('TRADEDATE')
+    },
+    updateTime () {
+      return this.getMarketdata('UPDATETIME')
+    },
+    currentValue () {
+      return this.getMarketdata('CURRENTVALUE')
+    },
+    lastChangeToOpenPrc () {
+      return this.getMarketdata('LASTCHANGETOOPENPRC')
+    },
+    link () {
+      return 'https://www.moex.com/en/index/' + this.getMarketdata('SECID')
+    },
+    chart () {
+      return 'https://iss.moex.com/cs/engines/stock/markets/index/boardgroups/9/securities/' +
+        this.getMarketdata('SECID') +
+        '.png?c.width=450&z1.width=450&z1_c.width=450&c.height=168&z1.height=168&z1_c.height=168&template=adv_no_volume&_=' +
+        this.getMarketdata('SEQNUM') +
+        '&compare=&compare_template=adv_no_volume_comp&candles=72&interval=10'
+    },
+    rowColor () {
+      if (this.isRowCurrent) {
+        return 'current'
+      } else if (this.index % 2 === 1) {
+        return 'even'
+      } else if (this.index % 2 === 0) {
+        return 'odd'
+      }
+    },
+    percentColor () {
+      if (this.lastChangeToOpenPrc > 0) {
         return 'trend-up'
-      } else if (percent < 0) {
+      } else if (this.lastChangeToOpenPrc < 0) {
         return 'trend-down'
       } else {
         return 'trend-none'
       }
-    },
-    rowColor (index) {
-      if (this.isRowCurrent) {
-        return 'current'
-      } else if (index % 2 === 1) {
-        return 'even'
-      } else if (index % 2 === 0) {
-        return 'odd'
-      }
-    }
-  },
-  computed: {
-    link () {
-      return 'https://www.moex.com/en/index/' + this.marketdata[this.marketdataColumns.indexOf('SECID')]
-    },
-    chart () {
-      let a = 'https://iss.moex.com/cs/engines/stock/markets/index/boardgroups/9/securities/'
-      let b = '.png?c.width=450&z1.width=450&z1_c.width=450&c.height=168&z1.height=168&z1_c.height=168&template=adv_no_volume&_='
-      let c = '&compare=&compare_template=adv_no_volume_comp&candles=72&interval=10'
-      let code = this.marketdata[this.marketdataColumns.indexOf('SECID')]
-      let number = this.marketdata[this.marketdataColumns.indexOf('SEQNUM')]
-      return a + code + b + number + c
     }
   },
   filters: {
@@ -100,20 +110,16 @@ export default {
       return value.toFixed(2)
     },
     formatDate (value) {
-      if (value) {
-        return moment(String(value)).format('DD.MM.YYYY')
-      }
+      if (value) return moment(String(value)).format('DD.MM.YYYY')
     },
     formatTime (value) {
-      if (value) {
-        return value.substring(0, value.lastIndexOf(':'))
-      }
+      if (value) return value.substring(0, value.lastIndexOf(':'))
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
   .row {
     border-collapse: collapse;
     border-spacing: 0;
