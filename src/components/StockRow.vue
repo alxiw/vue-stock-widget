@@ -53,37 +53,37 @@ export default {
     isRowCurrent: Boolean
   },
   methods: {
-    getSecurities (value) {
+    getSecuritiesValue (value) {
       return this.securities[this.securitiesColumns.indexOf(value)]
     },
-    getMarketdata (value) {
+    getMarketdataValue (value) {
       return this.marketdata[this.marketdataColumns.indexOf(value)]
     }
   },
   computed: {
     shortName () {
-      return this.getSecurities('SHORTNAME')
+      return this.getSecuritiesValue('SHORTNAME')
     },
     tradeDate () {
-      return this.getMarketdata('TRADEDATE')
+      return this.getMarketdataValue('TRADEDATE')
     },
     updateTime () {
-      return this.getMarketdata('UPDATETIME')
+      return this.getMarketdataValue('UPDATETIME')
     },
     currentValue () {
-      return this.getMarketdata('CURRENTVALUE')
+      return this.getMarketdataValue('CURRENTVALUE')
     },
     lastChangeToOpenPrc () {
-      return this.getMarketdata('LASTCHANGETOOPENPRC')
+      return this.getMarketdataValue('LASTCHANGETOOPENPRC')
     },
     link () {
-      return 'https://www.moex.com/en/index/' + this.getMarketdata('SECID')
+      return 'https://www.moex.com/en/index/' + this.getMarketdataValue('SECID')
     },
     chart () {
       return 'https://iss.moex.com/cs/engines/stock/markets/index/boardgroups/9/securities/' +
-        this.getMarketdata('SECID') +
+        this.getMarketdataValue('SECID') +
         '.png?c.width=450&z1.width=450&z1_c.width=450&c.height=168&z1.height=168&z1_c.height=168&template=adv_no_volume&_=' +
-        this.getMarketdata('SEQNUM') +
+        this.getMarketdataValue('SEQNUM') +
         '&compare=&compare_template=adv_no_volume_comp&candles=72&interval=10'
     },
     rowColor () {
