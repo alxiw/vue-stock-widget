@@ -6,8 +6,8 @@
       "codes": [
         "IMOEX",
         "RTSI",
-        "MICEXBMI",
-        "RTSSTD",
+        "MOEXBMI",
+        "MOEXBC",
         "RVI"
       ]
     },
@@ -15,10 +15,10 @@
       "title": "bonds",
       "codes": [
         "RGBITR",
-        "MICEXCBITR",
-        "MICEXMBITR",
-        "MICEXCBITR3Y",
-        "MICEXCBITR5Y"
+        "RUCBITR",
+        "RUMBITR",
+        "RUCBTR3Y",
+        "RUCBTR5Y"
       ]
     },
     {
@@ -42,12 +42,12 @@
     {
       "title": "other",
       "codes": [
-        "MICEXTLC",
-        "MICEXPWR",
-        "MICEXFNL",
-        "MICEXTRN",
-        "MICEXCGS",
-        "MICEXCHM"
+        "RUSFAR",
+        "RUSFAR1W",
+        "RUSFAR2W",
+        "RUSFAR1M",
+        "RUSFAR2M",
+        "RUSFAR3M"
       ]
     }
   ]

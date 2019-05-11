@@ -93,6 +93,8 @@ export default {
         return 'even'
       } else if (this.index % 2 === 0) {
         return 'odd'
+      } else {
+        return 'even'
       }
     },
     percentColor () {
