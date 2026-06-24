@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 
 export default {
   name: 'StockRow',
@@ -80,7 +79,7 @@ export default {
       return 'https://www.moex.com/en/index/' + this.getMarketdataValue('SECID')
     },
     chart () {
-      return 'https://iss.moex.com/cs/engines/stock/markets/index/boardgroups/9/securities/' +
+      return '/cs/engines/stock/markets/index/boardgroups/9/securities/' +
         this.getMarketdataValue('SECID') +
         '.png?c.width=450&z1.width=450&z1_c.width=450&c.height=168&z1.height=168&z1_c.height=168&template=adv_no_volume&_=' +
         this.getMarketdataValue('SEQNUM') +
@@ -112,7 +111,9 @@ export default {
       return value.toFixed(2)
     },
     formatDate (value) {
-      if (value) return moment(String(value)).format('DD.MM.YYYY')
+      if (!value) return ''
+      const [y, m, d] = value.split('-')
+      return `${d}.${m}.${y}`
     },
     formatTime (value) {
       if (value) return value.substring(0, value.lastIndexOf(':'))

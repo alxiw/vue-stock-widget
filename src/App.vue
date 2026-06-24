@@ -7,7 +7,7 @@
 <script>
 import data from './assets/data.json'
 
-import StockWidget from './components/StockWidget'
+import StockWidget from './components/StockWidget.vue'
 
 export default {
   name: 'App',

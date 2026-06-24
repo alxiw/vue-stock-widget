@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import StockRow from './StockRow'
+import StockRow from './StockRow.vue'
 
 export default {
   name: 'StockTab',

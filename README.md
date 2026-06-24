@@ -12,8 +12,7 @@ You are able to embed the widget on your site and customize it. Just edit JSON f
 
 * [vue](https://github.com/vuejs/vue)
 * [axios](https://github.com/axios/axios)
-* [moment](https://github.com/moment/moment)
-* [webpack](https://github.com/webpack/webpack)
+* [vite](https://github.com/vitejs/vite)
 
 ## Installation
 
@@ -28,15 +27,6 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-## Author
-
-Developed by [alxiw](mailto:alxiw@ya.ru)
-
 ## License
 
-[MIT](LICENSE)
-
-
-
+[MIT](LICENSE) © [alxiw](mailto:alxiw@outlook.com)
