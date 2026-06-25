@@ -27,53 +27,55 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
-
 import StockTab from './StockTab.vue'
 
-export default {
-  name: 'StockWidget',
-  components: {
-    StockTab
-  },
-  props: {
-    data: Object
-  },
-  data () {
-    return {
-      securitiesJson: {},
-      axiosLoading: true,
-      axiosErrored: false,
-      currentTabIndex: 0
-    }
-  },
-  created () {
-    this.fetchSecuritiesJson()
-  },
-  methods: {
-    fetchSecuritiesJson () {
-      const uniqueCodes = [
-        ...new Set(this.data.tabs.flatMap(tab => tab.codes || []))
-      ]
-      if (uniqueCodes.length === 0) {
-        this.axiosLoading = false
-        return
-      }
-      const link = `/iss/engines/stock/markets/index/securities.json?securities=${uniqueCodes.join(',')}`
-      axios
-        .get(link)
-        .then(response => (this.securitiesJson = response.data))
-        .catch(error => {
-          console.log(error)
-          this.axiosErrored = true
-        })
-        .finally(() => (this.axiosLoading = false))
-    },
-    selectTab (index) {
-      this.currentTabIndex = index
-    }
+interface TabInfo {
+  title: string
+  codes: string[]
+}
+
+interface WidgetData {
+  title: string
+  tabs: TabInfo[]
+}
+
+const props = defineProps<{
+  data: WidgetData
+}>()
+
+const securitiesJson = ref<any>({})
+const axiosLoading = ref(true)
+const axiosErrored = ref(false)
+const currentTabIndex = ref(0)
+
+onMounted(() => {
+  fetchSecuritiesJson()
+})
+
+function fetchSecuritiesJson(): void {
+  const uniqueCodes: string[] = [
+    ...new Set(props.data.tabs.flatMap(tab => tab.codes || []))
+  ]
+  if (uniqueCodes.length === 0) {
+    axiosLoading.value = false
+    return
   }
+  const link = `/iss/engines/stock/markets/index/securities.json?securities=${uniqueCodes.join(',')}`
+  axios
+    .get(link)
+    .then(response => (securitiesJson.value = response.data))
+    .catch(error => {
+      console.log(error)
+      axiosErrored.value = true
+    })
+    .finally(() => (axiosLoading.value = false))
+}
+
+function selectTab(index: number): void {
+  currentTabIndex.value = index
 }
 </script>
 

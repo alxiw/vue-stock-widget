@@ -14,7 +14,7 @@
                        :marketdata-columns="marketdataColumns"
                        :securities="stock.securities"
                        :marketdata="stock.marketdata"
-                       :is-row-current="isRowCurrent(index)"
+                       :is-row-current="index === currentRowIndex"
                        @active="makeActive(index)">
             </stock-row>
           </template>
@@ -24,63 +24,72 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, computed, watch } from 'vue'
 import StockRow from './StockRow.vue'
 
-export default {
-  name: 'StockTab',
-  components: {
-    StockRow
-  },
-  props: {
-    tabInfo: Object,
-    securitiesJson: Object
-  },
-  data () {
-    return {
-      currentRowIndex: -1
-    }
-  },
-  methods: {
-    makeActive (index) {
-      this.currentRowIndex = this.currentRowIndex === index ? -1 : index
-    },
-    isRowCurrent (index) {
-      return index === this.currentRowIndex
-    }
-  },
-  computed: {
-    securitiesColumns () {
-      return this.securitiesJson?.securities?.columns || []
-    },
-    marketdataColumns () {
-      return this.securitiesJson?.marketdata?.columns || []
-    },
-    preparedStocks () {
-      const codes = this.tabInfo?.codes
-      const securitiesData = this.securitiesJson?.securities?.data
-      const marketdataData = this.securitiesJson?.marketdata?.data
-
-      if (!codes || !securitiesData || !marketdataData) return []
-
-      const securitiesMap = new Map(securitiesData.map(item => [item[0], item]))
-      const marketdataMap = new Map(marketdataData.map(item => [item[0], item]))
-
-      return codes
-        .map(code => ({
-          code,
-          securities: securitiesMap.get(code),
-          marketdata: marketdataMap.get(code)
-        }))
-        .filter(item => item.securities && item.marketdata)
-    },
-  },
-  watch: {
-    tabInfo () {
-      this.currentRowIndex = -1
-    }
-  }
+interface TabInfo {
+  title: string
+  codes: string[]
 }
+
+interface MoexDataBlock {
+  columns: string[]
+  data: any[][]
+}
+
+interface SecuritiesJson {
+  securities?: MoexDataBlock
+  marketdata?: MoexDataBlock
+}
+
+interface PreparedStock {
+  code: string
+  securities: any[]
+  marketdata: any[]
+}
+
+const props = defineProps<{
+  tabInfo: TabInfo
+  securitiesJson: SecuritiesJson
+}>()
+
+const currentRowIndex = ref<number>(-1)
+
+const securitiesColumns = computed<string[]>(() => {
+  return props.securitiesJson?.securities?.columns || []
+})
+
+const marketdataColumns = computed<string[]>(() => {
+  return props.securitiesJson?.marketdata?.columns || []
+})
+
+const preparedStocks = computed<PreparedStock[]>(() => {
+  const codes = props.tabInfo?.codes
+  const securitiesData = props.securitiesJson?.securities?.data
+  const marketdataData = props.securitiesJson?.marketdata?.data
+
+  if (!codes || !securitiesData || !marketdataData) return []
+
+  const securitiesMap = new Map<string, any[]>(securitiesData.map(item => [item[0], item]))
+  const marketdataMap = new Map<string, any[]>(marketdataData.map(item => [item[0], item]))
+
+  return codes
+    .map(code => ({
+      code,
+      securities: securitiesMap.get(code),
+      marketdata: marketdataMap.get(code)
+    }))
+    .filter((item): item is PreparedStock => !!item.securities && !!item.marketdata)
+})
+
+function makeActive(index: number): void {
+  currentRowIndex.value = currentRowIndex.value === index ? -1 : index
+}
+
+watch(() => props.tabInfo, () => {
+  currentRowIndex.value = -1
+})
 </script>
 
 <style scoped>

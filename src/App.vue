@@ -4,22 +4,12 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import data from './assets/data.json'
-
 import StockWidget from './components/StockWidget.vue'
 
-export default {
-  name: 'App',
-  components: {
-    StockWidget
-  },
-  data () {
-    return {
-      data
-    }
-  }
-}
+const widgetData = ref(data)
 </script>
 
 <style>

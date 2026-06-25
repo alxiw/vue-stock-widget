@@ -11,6 +11,7 @@ You are able to embed the widget on your site and customize it. Just edit JSON f
 ## Dependencies
 
 * [vue](https://github.com/vuejs/vue)
+* [typescript](https://github.com/Microsoft/TypeScript)
 * [axios](https://github.com/axios/axios)
 * [vite](https://github.com/vitejs/vite)
 
@@ -20,7 +21,7 @@ You are able to embed the widget on your site and customize it. Just edit JSON f
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost
 npm run dev
 
 # build for production with minification
