@@ -15,8 +15,8 @@
         <button class="widget-button-tab"
             v-for="(tab, index) in data.tabs"
             :key="tab.title"
-            v-bind:class="['widget-button-tab', { current: currentTabIndex === index }]"
-            v-on:click="click(index)">
+            :class="{ current: currentTabIndex === index }"
+            @click="selectTab(index)">
           {{ tab.title }}
         </button>
         <stock-tab :tab-info="data.tabs[currentTabIndex]"
@@ -42,8 +42,7 @@ export default {
   },
   data () {
     return {
-      securitiesList: [],
-      securitiesJson: [],
+      securitiesJson: {},
       axiosLoading: true,
       axiosErrored: false,
       currentTabIndex: 0
@@ -54,14 +53,16 @@ export default {
   },
   methods: {
     fetchSecuritiesJson () {
-      const link = '/iss/engines/stock/markets/index/securities.json?securities='
-      for (let i = 0; i < this.data.tabs.length; i++) {
-        for (let j = 0; j < this.data.tabs[i].codes.length; j++) {
-          this.securitiesList.push(this.data.tabs[i].codes[j])
-        }
+      const uniqueCodes = [
+        ...new Set(this.data.tabs.flatMap(tab => tab.codes || []))
+      ]
+      if (uniqueCodes.length === 0) {
+        this.axiosLoading = false
+        return
       }
+      const link = `/iss/engines/stock/markets/index/securities.json?securities=${uniqueCodes.join(',')}`
       axios
-        .get(link + this.securitiesList.join(','))
+        .get(link)
         .then(response => (this.securitiesJson = response.data))
         .catch(error => {
           console.log(error)
@@ -69,7 +70,7 @@ export default {
         })
         .finally(() => (this.axiosLoading = false))
     },
-    click (index) {
+    selectTab (index) {
       this.currentTabIndex = index
     }
   }
@@ -82,31 +83,32 @@ export default {
     padding-bottom: 10px;
   }
   .widget-title {
+    color: #c8102e;
     font-size: 20px;
     font-weight: 700;
-    color: #C8102E;
-    vertical-align: middle;
-    white-space: nowrap;
     text-transform: uppercase;
+    white-space: nowrap;
   }
   .widget-loading {
-    background: #eee url("https://assets.moex.com/widgets/assets/facebook-ajax-loader.gif") no-repeat center center;
     padding: 25px 0;
+    background: #eee url("https://assets.moex.com/widgets/assets/facebook-ajax-loader.gif") no-repeat center center;
   }
   .widget-body {
     width: 100%
   }
   .widget-button-tab {
-    border: 1px solid #ccc;
-    cursor: pointer;
-    background: #f0f0f0;
-    border-radius: 6px;
-    padding: 3px 7px;
     margin-top: 5px;
     margin-bottom: 7px;
     margin-right: 5px;
+    padding: 3px 7px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #f0f0f0;
+    color: #333;
     font-size: 14px;
     text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
   }
   .widget-button-tab:hover {
     background: #e0e0e0;
