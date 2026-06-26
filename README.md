@@ -1,19 +1,12 @@
 # Vue Stock Widget
 
-The project is an simple Vue.js implementation of the widget similar to the posted on the Moscow Exchange home page [www.moex.com](https://www.moex.com/).
+A Vue.js stock widget based on the [Moscow Exchange (MOEX)](https://www.moex.com) design.
 
 ## Usage
 
-![How the widget looks like](./img/sample.png)
+Embed the widget on your site and customize it by editing a JSON config file in `src/assets/`, defining tabs and filling them with the index codes you want to display. Stock data is fetched via the Moscow Exchange API. You can find index codes on the MOEX website or using the queries described in the [API documentation](http://iss.moex.com/iss/reference/).
 
-You are able to embed the widget on your site and customize it. Just edit JSON file in src/assets directory defining tabs and filling them with index codes which you want. Stock information will be uploaded by these codes via Moscow Exchange API. You can get the index codes on the Moscow Exchange website or using queries described in the API [documentation](http://iss.moex.com/iss/reference/).
-
-## Dependencies
-
-* [vue](https://github.com/vuejs/vue)
-* [typescript](https://github.com/Microsoft/TypeScript)
-* [axios](https://github.com/axios/axios)
-* [vite](https://github.com/vitejs/vite)
+![Screenshot](./img/sample.png)
 
 ## Installation
 
@@ -27,6 +20,13 @@ npm run dev
 # build for production with minification
 npm run build
 ```
+
+## Dependencies
+
+* [vue](https://github.com/vuejs/vue)
+* [typescript](https://github.com/Microsoft/TypeScript)
+* [axios](https://github.com/axios/axios)
+* [vite](https://github.com/vitejs/vite)
 
 ## License
 
